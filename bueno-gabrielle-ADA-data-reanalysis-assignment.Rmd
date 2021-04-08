@@ -33,7 +33,7 @@ knitr::include_graphics("img/ERufifrons.jpg")
 
 # Method Notes
 
-1. Dryad provided a word file with four tables of data for each analysis; this file is included in the repository. Data from the each table was transferred from this file to a CSV file for use in R. Columns were renamed for ease of use in R. 
+1. Dryad provided a word file with four tables of data for each analysis; this file is included in the repository ("Dryad_Data_K&F2012.docx"). Data from the each table was transferred from this file to a CSV file for use in R. Columns were renamed for ease of use in R. 
 
    + I only used the Reproductive Restraint data, but have uploaded the rest as well.
 

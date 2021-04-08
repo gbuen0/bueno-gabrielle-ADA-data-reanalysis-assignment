@@ -2845,8 +2845,11 @@ div.tocify {
 <div id="method-notes" class="section level1">
 <h1>Method Notes</h1>
 <ol style="list-style-type: decimal">
-<li><p>Dryad provided a word file with four tables of data for each analysis; this file is included in the repository. Data from the each table was transferred from this file to a CSV file for use in R. Columns were renamed for ease of use in R.</p></li>
-<li><p>The variables included are:</p></li>
+<li><p>Dryad provided a word file with four tables of data for each analysis; this file is included in the repository. Data from the each table was transferred from this file to a CSV file for use in R. Columns were renamed for ease of use in R.</p>
+<ul>
+<li>I only used the Reproductive Restraint data, but have uploaded the rest as well.</li>
+</ul></li>
+<li><p>The variables included in the Reproductive Restraint data are:</p></li>
 </ol>
 <table>
 <thead>
@@ -2997,9 +3000,9 @@ DescriptiveStatsComparison</code></pre>
 <pre class="r"><code>compare(DescriptiveDataAgeAtFirstBirthComparison, OriginalDescriptiveStats, equal = TRUE)</code></pre>
 <pre><code>## FALSE [FALSE, FALSE, TRUE, FALSE, FALSE, FALSE]</code></pre>
 </div>
-<div id="inferential-statistics" class="section level1">
-<h1>2. Inferential Statistics</h1>
-<p>I will here be replicating the GLMM used to calculate reproductive restraint, as seen on page 690, top row of Table 1.</p>
+<div id="inferential-statistic-replication" class="section level1">
+<h1>2. Inferential Statistic Replication</h1>
+<p>I will here be replicating the GLMM used to calculate reproductive restraint, as seen on page 690, top row of Table 1. As a reminder, reproductive restraint is measured by a female lemur’s probability of not giving birth. The results of the GLMM will tell us whether a female was less likely to give birth based on the number of females in her group, her age, her group size, and cumulative amount of rainfall during the corresponding rainy season.</p>
 <ol style="list-style-type: decimal">
 <li>Let’s start by loading the libraries we’ll need beyond those loaded in part 1. The dataset is already loaded in.</li>
 </ol>
@@ -3119,7 +3122,7 @@ OriginalInferentialStats</code></pre>
   </script>
 </div>
 <ol start="6" style="list-style-type: decimal">
-<li>Let’s now combine these two tibbles. Look how beautiful and matched they are!</li>
+<li>Let’s now combine these two tibbles. Look how beautiful and matched they are! The only difference is the standard error and p-value of group size, which in my replication is not significant, even though it is significant in the paper.</li>
 </ol>
 <pre class="r"><code>c &lt;- rbind(ReprodRestraintTidier, OriginalInferentialStats) #merging the two tibbles in a dummy object
 compareInferentialStats &lt;- arrange(c, factor) #arranging them by factor, so we can compare each row side by side
@@ -3187,16 +3190,21 @@ p</code></pre>
 <li><p>They also reported that N = 12. The dryad data has 20 individual females that gave birth. My guess is that they started collecting data after 8 of those females became reproductively mature, and so they weren’t able to say when those 8 females first gave birth. However that information was not in the supplied data, so I’m working with what I was given.</p></li>
 </ul>
 </div>
-<div id="inferential-statistics-1" class="section level2">
+<div id="inferential-statistics" class="section level2">
 <h2>2. Inferential Statistics</h2>
-<p>I got the same results! As noted in part 2, the authors said they had used ID nested in group identity as a random factor. When I did that (by writing the random factors as <code>(1|ID/Group)</code>), I got incorrect results. Un-nesting them got me the right ones! :) Very exciting after so much time spent trying to figure this out.</p>
+<p>I got very similar results! As noted in part 2, the authors said they had used ID nested in group identity as a random factor. When I did that (by writing the random factors as <code>(1|ID/Group)</code>), I got incorrect results. Un-nesting them got me the right ones! :) Very exciting after so much time spent trying to figure this out.</p>
 <ul>
-<li>Note on scaling: I realized that the authors had used commas instead of periods as decimals in the dryad data, and that’s why the rainfall variable had such huge values (it was reading 998.47ml as 99,847ml!). I changed the commas to periods in the excel file, and no longer had an issue with scaling, and got the right answers!</li>
+<li><p>The only difference is the standard error and p-value for group size: Both were larger in my replication, and so weren’t significant, even though they were significant in the publication. I tried different methods of nesting (using colons instead of slashes, switching the order, etc.), and while using nesting as shown above did give me a significant value for group size, it gave me all different values for the other statistics. So, I’m sticking with what I did.</p>
+<ul>
+<li>I’m guessing there’s some slight difference between the dryad file and what they used.</li>
+</ul></li>
+<li><p>Note on scaling: I realized that the authors had used commas instead of periods as decimals in the dryad data, and that’s why the rainfall variable had such huge values (it was reading 998.47ml as 99,847ml!). I changed the commas to periods in the excel file, and no longer had an issue with scaling, and got the right answers!</p></li>
 </ul>
 </div>
 <div id="visualization-1" class="section level2">
 <h2>3. Visualization</h2>
 <p>I think I did a pretty good job at replicating this visualization :)</p>
+<p>I probably brute-forced it more than the authors did, but I got the same results and that’s what I’m focusing on!</p>
 </div>
 </div>
 <div id="references" class="section level1">
